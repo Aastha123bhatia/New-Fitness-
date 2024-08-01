@@ -8,6 +8,9 @@ import Homebanner2 from "./components/Homebanner2/Homebanner2"
 import Page from "./Workout/Page"
 import ReportPage from "./report/ReportPage"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   //const navigate=Navigate();
   return (
@@ -23,6 +26,7 @@ function App() {
         <Route path="/report/:name" element={<ReportPage/>}/>
   
       </Routes>
+      <ToastContainer/>
     </Router>
   )
 }
