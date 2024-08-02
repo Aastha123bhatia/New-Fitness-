@@ -2,18 +2,18 @@ import React, {useEffect, useState} from 'react'
 import { LineChart } from '@mui/x-charts/LineChart' 
 import './ReportPage.css'
 import CalorieIntakePopup from '../components/ReportFormPopup/CalorieIntake/CalorieIntakePopup'
-// import{ AiFillEdit } from 'react-icons/ai'
-//import CalorieIntakePopup from '@/components/ReportFormPopup/CalorieIntake/CalorieIntakePopup'
+import{ AiFillEdit } from 'react-icons/ai'
+
 
 const ReportPage = () => {
     const color = '#ffc20e'
 
     const chartsParams = {
-        // margin: {bottom: 20, left: 25, right: 5 }
-        // height: 300,
-        // height={300}
-        // margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
-        // grid={{ vertical: true, horizontal: true }}
+        // margin: {bottom: 20, left: 25, right: 5 },
+        height: 300,
+        // height:300,
+        margin:{ left: 30, right: 30, top: 30, bottom: 50 },
+        // grid:{ vertical: true, horizontal: true }
     }
     const [dataS1,setDataS1]=useState(null)
     const getDataForS1 = async () => {
@@ -98,6 +98,9 @@ const ReportPage = () => {
     }, [])
 
     console.log(dataS1 &&1)
+    
+    const [showCalorieIntakePopup, setShowCalorieIntakePopup] = useState(false)
+
 
   return (
     <div className='reportpage'>
@@ -109,9 +112,9 @@ const ReportPage = () => {
                 data: dataS1.xAxis.data,
                 scaleType: dataS1.xAxis.scaleType,
                 label: dataS1.xAxis.label,
-                valueFormatter: (date) => {
-                    return new Date(date).getDate();
-                }
+                // valueFormatter: (date) => {
+                //     return new Date(date).getDate();
+                // }
             }]}
             series={[
                 {
@@ -120,13 +123,107 @@ const ReportPage = () => {
                     color: dataS1.color,
                 },
             ]}
-            // {...chartsParams}
-            height={300}
-            margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+            {...chartsParams}
+            // height={300}
+            // margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
             // margin={{ left: 25, right: 5, top: 30, bottom: 20 }}
         />
         )}
         </div> 
+        <div className='s2'>
+        {dataS1 &&(
+        <LineChart
+            xAxis={[{
+                id: 'Day',
+                data: dataS1.xAxis.data,
+                scaleType: dataS1.xAxis.scaleType,
+                label: dataS1.xAxis.label,
+                // valueFormatter: (date) => {
+                //     return new Date(date).getDate();
+                // }
+            }]}
+            series={[
+                {
+                    data: dataS1.data,
+                    label: dataS1.title,
+                    color: dataS1.color,
+                },
+            ]}
+            {...chartsParams}
+            // height={300}
+            // margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+            // margin={{ left: 25, right: 5, top: 30, bottom: 20 }}
+        />
+        )}
+        </div>
+        <div className='s3'>
+        {dataS1 &&(
+        <LineChart
+            xAxis={[{
+                id: 'Day',
+                data: dataS1.xAxis.data,
+                scaleType: dataS1.xAxis.scaleType,
+                label: dataS1.xAxis.label,
+                // valueFormatter: (date) => {
+                //     return new Date(date).getDate();
+                // }
+            }]}
+            series={[
+                {
+                    data: dataS1.data,
+                    label: dataS1.title,
+                    color: dataS1.color,
+                },
+            ]}
+            {...chartsParams}
+            // height={300}
+            // margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+            // margin={{ left: 25, right: 5, top: 30, bottom: 20 }}
+        />
+        )}
+        </div>
+        <div className='s4'>
+        {dataS1 &&(
+        <LineChart
+            xAxis={[{
+                id: 'Day',
+                data: dataS1.xAxis.data,
+                scaleType: dataS1.xAxis.scaleType,
+                label: dataS1.xAxis.label,
+                // valueFormatter: (date) => {
+                //     return new Date(date).getDate();
+                // }
+            }]}
+            series={[
+                {
+                    data: dataS1.data,
+                    label: dataS1.title,
+                    color: dataS1.color,
+                },
+            ]}
+            {...chartsParams}
+            // height={300}
+            // margin={{ left: 30, right: 30, top: 30, bottom: 30 }}
+            // margin={{ left: 25, right: 5, top: 30, bottom: 20 }}
+        />
+        )}
+        </div>
+
+        <button className='editbutton'
+                onClick={() => {
+                    setShowCalorieIntakePopup(true)
+                }}
+            >
+                <AiFillEdit />
+            </button>
+
+            {
+                showCalorieIntakePopup &&
+
+                <CalorieIntakePopup setShowCalorieIntakePopup={setShowCalorieIntakePopup} />
+
+            }
+
     </div>
 )
 }
