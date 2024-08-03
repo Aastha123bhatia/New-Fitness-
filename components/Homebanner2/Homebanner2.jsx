@@ -8,6 +8,7 @@ import { Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 const Homebanner2 = () => {
     const [workouts, setworkouts] = useState()
+    const [data, setData] = useState()
     const navigate = useNavigate();
     const getworkouts = async () => {
         let data = [
@@ -61,60 +62,89 @@ const Homebanner2 = () => {
         ]
         setworkouts(data)
       }
+
+      const getData = async () => {
+        fetch(process.env.NEXT_PUBLIC_BACKEND_API + '/workoutplans/workouts',{ 
+          method: 'GET',
+          credentials: 'include',
+        })
+        .then (res => res.json())
+        .then (data => {
+            console.log(data)
+          if (data.ok) {
+            setData(data.data)
+          }
+          else {
+            setData([])
+          }
+       })
+      .catch(err => { 
+        console.log(err)
+        setData ([])
+      })
+      }
       useEffect(() => {
         getworkouts()
       }, [])
+
+
+
   return (
-    <div className="divh">
-        {/* Homebanner2 */}
-        <h1 className="mainhead1">Workouts</h1>
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 50,
-          },
-        }}
-        modules={[Pagination]}
-        className="mySwiper"
-      >
-        {
-          workouts && workouts.map((item, index) => {
-            return (
-              <SwiperSlide key={index} >
-                <div className="swiper-slide"
-                  style={{
-                    backgroundImage: `url(${item.imageUrl})`,
-                  }}
-                  onClick={() => {navigate(`/workout/${item.type}`)
-                  }}
-                >
-                  <div className="swiper-slide-content">
-                    <h2>{item.type}</h2>
+    <>
+      {
+        data && 
+        <div>
+          <h1 className='mainhead1'>Workouts</h1>
+          <Swiper
+            SlidesPerView={1} 
+            spaceBetween={10} 
+            pagination={{
+              clickable: true,
+            }}
+            breakpoints= {{
+              640: {
+                slidesPerView: 2, 
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 40.
+              },
+              1024: {
+                slidesPerView: 5, 
+                spaceBetween: 50,
+              },
+            }}
+            modules={[Pagination]} 
+            className="mySwiper"
+          >
+            {
+              data && data.map(item, index) => {
+                return (
+                  <SwiperSlide key={index} >
+                  <div className=' swiper-slide' 
+                    style={{
+                      backgroundImage: `url(${item.imageURL})`,
+                    }}
+                    onClick={ () => {
+                      window. location.href = /workout/$(item.type)
+                    }}
+                  >
+                  <div className=' swiper-slide-content'>
+                    <h2>(item.type)</h2>
                     <p>{item.durationInMin} min</p>
                   </div>
-                </div>
-              </SwiperSlide>
-            )
-          })
-        }
-
-      </Swiper>
-    </div>
+                  </div>
+                  </SwiperSlide>
+                )
+              }
+            }
+          </Swiper>
+      } 
+    </>
+  
   )
 }
+
 
 export default Homebanner2
